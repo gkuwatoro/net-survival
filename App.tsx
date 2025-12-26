@@ -33,6 +33,7 @@ interface Scenario {
 }
 
 const App = () => {
+  // 型引数 <Option | null> を明示して TS2339 (Property does not exist on type 'never') を回避
   const [currentStage, setCurrentStage] = useState<number>(0);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
@@ -591,6 +592,7 @@ const App = () => {
     }
   ];
 
+  // 型アノテーションを追加して TS7006 (Implicit Any) を回避
   const handleOptionClick = (option: Option) => {
     if (showFeedback) return;
     setSelectedOption(option);
@@ -836,6 +838,7 @@ const App = () => {
                       key={option.id}
                       onClick={() => handleOptionClick(option)}
                       disabled={showFeedback}
+                      // TS18047対策: selectedOption?.id を使用して安全にアクセス
                       className={`
                         w-full text-left p-4 rounded-lg border-2 transition-all duration-200 flex items-center
                         ${showFeedback && option.id === selectedOption?.id
